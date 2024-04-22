@@ -9,4 +9,8 @@ class KasirController extends Controller
     public function index() {
         return view('kasir.index');
     }
+
+    public function pesan() {
+        return view('kasir.pesan');
+    }
 }
