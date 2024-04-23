@@ -20,75 +20,52 @@
             </div>
         </div>
     </nav>
-    <div class="p-16 px-24">
-        <div class="w-24">
-            <a href="/kasir" class="flex gap-2">
-                <svg style="margin-top: 3px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 270 223" fill="none">
-                    <path d="M79.6313 143.023L16.2396 79.6313M16.2396 79.6313L79.6313 16.2396M16.2396 79.6313H190.567C207.379 79.6313 223.503 86.3101 235.392 98.1983C247.28 110.087 253.959 126.211 253.959 143.023C253.959 159.836 247.28 175.959 235.392 187.848C223.503 199.736 207.379 206.415 190.567 206.415H174.719" stroke="black" stroke-width="31.6959" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <p class="text-xl mb-2">
-                    Kembali
-                </p>
-            </a>
+    <div class="p-16 px-24 pb-3">
+        <div class="flex flex-wrap justify-between w-full">
+            <div class="w-24">
+                <a href="/kasir" class="flex gap-2">
+                    <svg style="margin-top: 3px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 270 223" fill="none">
+                        <path d="M79.6313 143.023L16.2396 79.6313M16.2396 79.6313L79.6313 16.2396M16.2396 79.6313H190.567C207.379 79.6313 223.503 86.3101 235.392 98.1983C247.28 110.087 253.959 126.211 253.959 143.023C253.959 159.836 247.28 175.959 235.392 187.848C223.503 199.736 207.379 206.415 190.567 206.415H174.719" stroke="black" stroke-width="31.6959" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="text-xl mb-2">
+                        Kembali
+                    </p>
+                </a>
+            </div>
+            <div class="w-56">
+                <form class="w-56 ml-auto" action="/pendaftaran" method="get">
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input type="search" name="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari" />
+                        <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
+
         <div class="w-full min-h-80 rounded mx-auto grid grid-cols-4 gap-1 pl-3 overflow-hidden">
-            <div class=" bg-white h-80 rounded mb-3" style="width: 96%;">
-                <div class="bg-black mx-auto mt-3 w-56 h-40">
-                    <img style="object-fit: cover; height:100%;" src="{{ asset('images/makanan/donut.jpeg') }}" alt="">
+            @foreach($menus as $menu)
+            <div class="bg-white h-80 rounded mb-3" style="width: 96%;">
+                <div class="bg-black mx-auto mt-3 h-40 overflow-hidden" style="max-width: 80%;">
+                    <img style="object-fit: cover; width: 100%; height:100%;" src="{{ asset('images/makanan/' . $menu->foto) }}" alt="{{ $menu->nama }}">
                 </div>
                 <div class="ml-5 mt-3">
-                    <p class="text-2xl">Donut</p>
+                    <p class="text-2xl">{{ $menu->nama }}</p>
                 </div>
                 <div class="ml-5 mt-2">
-                    <p class="text-2xl">Rp. 5.000,00</p>
+                    <p class="text-2xl">Rp. {{ number_format($menu->harga, 2, ',', '.') }}</p>
                 </div>
                 <div class="flex justify-center items-center mt-2">
-                    <button type="button" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">+ Tambah</button>
+                    <button style="max-width: 55%; text-align:center;" type="button" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah</button>
                 </div>
             </div>
-            <div class=" bg-white h-80 rounded mb-3" style="width: 96%;">
-                <div class="bg-blue-800 mx-auto mt-3 w-56 h-40 ">
-                    <img style="background-size: cover; background-position: center; background-repeat: no-repeat; height:100%; width:100%;" src="{{ asset('images/makanan/bala_bala.jpg') }}" alt="">
-                </div>
-                <div class="ml-5 mt-3">
-                    <p class="text-2xl">Bala-bala</p>
-                </div>
-                <div class="ml-5 mt-2">
-                    <p class="text-2xl">Rp. 5.000,00</p>
-                </div>
-                <div class="flex justify-center items-center mt-2">
-                    <button type="button" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">+ Tambah</button>
-                </div>
-            </div>
-            <div class=" bg-white h-80 rounded mb-3" style="width: 96%;">
-                <div class="bg-red-800 mx-auto mt-3 w-56 h-40">
-                    <img style="background-size: cover; background-position: center; background-repeat: no-repeat; height:100%; width:100%;" src="{{ asset('images/makanan/mendoan.jpg') }}" alt="">
-                </div>
-                <div class="ml-5 mt-3">
-                    <p class="text-2xl">Tempe Mendoan</p>
-                </div>
-                <div class="ml-5 mt-2">
-                    <p class="text-2xl">Rp. 5.000,00</p>
-                </div>
-                <div class="flex justify-center items-center mt-2">
-                    <button type="button" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">+ Tambah</button>
-                </div>
-            </div>
-            <div class=" bg-white h-80 rounded mb-3" style="width: 96%;">
-                <div class="bg-red-800 mx-auto mt-3 w-56 h-40">
-                    <img style="background-size: cover; background-position: center; background-repeat: no-repeat; height:100%; width:100%;" src="{{ asset('images/makanan/churros.jpg') }}" alt="">
-                </div>
-                <div class="ml-5 mt-3">
-                    <p class="text-2xl">Churros</p>
-                </div>
-                <div class="ml-5 mt-2">
-                    <p class="text-2xl">Rp. 5.000,00</p>
-                </div>
-                <div class="flex justify-center items-center mt-2">
-                    <button type="button" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">+ Tambah</button>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
