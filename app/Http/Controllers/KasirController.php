@@ -13,4 +13,8 @@ class KasirController extends Controller
     public function pesan() {
         return view('kasir.pesan');
     }
+
+    public function pembayaran() {
+        return view('kasir.pesan');
+    }
 }

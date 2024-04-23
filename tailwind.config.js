@@ -16,6 +16,7 @@ module.exports = {
             'abu': 'rgba(217, 217, 217, 0.50);',
             'hijau': '#00FF1A',
             'bgutama': '#D7CCC8',
+            'hijau_muda': '#00FF1A',
           },
         },
     },

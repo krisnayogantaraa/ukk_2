@@ -29,7 +29,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
 
 // untuk kasir
 Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
-    Route::get('/kasir', [KasirController::class, 'index']);
+    Route::resource('/kasir', \App\Http\Controllers\KasirController::class);
+    Route::get('/pesan', [KasirController::class, 'pesan']);
     Route::get('/pesan', [KasirController::class, 'pesan']);
 
 });
