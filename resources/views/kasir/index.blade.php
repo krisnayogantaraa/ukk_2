@@ -10,6 +10,9 @@
                 <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Cafe Bisa Ngopi</span>
             </a>
             <div class="flex h-14 gap-4">
+                <p class="text-white align-middle mt-3 text-2xl">Dashboard Kasir</p>
+            </div>
+            <div class="flex h-14 gap-4">
                 <p class="text-white align-middle mt-3 text-lg">Diana Hayandadi</p>
                 <div class="h-14 w-14 bg-white rounded-full">
 
@@ -18,7 +21,6 @@
         </div>
     </nav>
     <div class="p-16 px-24">
-        <p class="text-xl mb-4">Dashboard/</p>
         <div class="flex justify-between">
             <a href="/pesan">
                 <div class="bg-white rounded p-10 " style="height: 26rem; width:21rem;">
