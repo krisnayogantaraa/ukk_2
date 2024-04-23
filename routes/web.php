@@ -30,9 +30,10 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
 // untuk kasir
 Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::resource('/kasir', \App\Http\Controllers\KasirController::class);
-    Route::get('/pesan', [KasirController::class, 'pesan']);
-    Route::get('/pesan', [KasirController::class, 'pesan']);
-
+    Route::get('/pesan', [KasirController::class, 'pesan'])->name('pesan');
+    Route::post('/tambah-keranjang', [KasirController::class, 'tambah_keranjang'])->name('tambah-keranjang');
+    Route::post('/hapus-keranjang', [KasirController::class, 'hapus_keranjang'])->name('hapus-keranjang');
+    Route::get('/keranjang', [KasirController::class, 'keranjang'])->name('keranjang');
 });
 
 // untuk meja

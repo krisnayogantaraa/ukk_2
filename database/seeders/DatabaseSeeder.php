@@ -33,9 +33,9 @@ class DatabaseSeeder extends Seeder
             'role_name' => 'manajer',
         ]);
         
-        User::factory(5)->create();
 
         $this->call(menus::class);
+        $this->call(akun::class);
 
     }
 }

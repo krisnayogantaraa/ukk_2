@@ -40,6 +40,30 @@ class menus extends Seeder
                 'harga' => 6000,
                 'foto' => 'mendoan.jpg'
             ],
+            [
+                'nama' => 'Arabika',
+                'jenis' => 'Minuman',
+                'harga' => 10000,
+                'foto' => 'arabika.png'
+            ],
+            [
+                'nama' => 'Cappucino',
+                'jenis' => 'Minuman',
+                'harga' => 12000,
+                'foto' => 'cappucino.png'
+            ],
+            [
+                'nama' => 'Espresso',
+                'jenis' => 'Minuman',
+                'harga' => 15000,
+                'foto' => 'espresso.png'
+            ],
+            [
+                'nama' => 'Jus Mangga',
+                'jenis' => 'Minuman',
+                'harga' => 8000,
+                'foto' => 'jus_mangga.png'
+            ],
         ];
         // Memasukkan data ke dalam tabel 'users'
         DB::table('menus')->insert($menus);

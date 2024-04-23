@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_kasir');
+            $table->string('no_meja');
+            $table->string('total_harga');
+            $table->string('total_bayar');
             $table->timestamps();
         });
     }

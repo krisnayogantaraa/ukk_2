@@ -13,10 +13,7 @@
                 <p class="text-white align-middle mt-3 text-2xl">Dashboard Kasir</p>
             </div>
             <div class="flex h-14 gap-4">
-                <p class="text-white align-middle mt-3 text-lg">Diana Hayandadi</p>
-                <div class="h-14 w-14 bg-white rounded-full">
-
-                </div>
+                <p class="text-white align-middle mt-3 text-lg">{{auth()->user()->name}}</p>
             </div>
         </div>
     </nav>
