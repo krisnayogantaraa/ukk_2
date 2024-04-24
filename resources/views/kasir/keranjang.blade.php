@@ -13,7 +13,7 @@
                 <p class="text-white align-middle mt-3 text-2xl">Keranjang</p>
             </div>
             <div class="flex h-14 gap-4">
-                <p class="text-white align-middle mt-3 text-lg">Diana Hayandadi</p>
+                <p class="text-white align-middle mt-3 text-lg">{{ Auth::user()->name }}</p>
                 <div class="h-14 w-14 bg-white rounded-full">
 
                 </div>
@@ -32,16 +32,94 @@
             </a>
         </div>
 
-        <div class="flex w-full justify-between">
-            <div class="h-16 bg-white rounded-t-xl" style="width:64%;">
+        <div class="flex w-full gap-3">
+            <div class="w-2/3">
+                <div style="width:100%" class="mb-3 h-16 bg-white rounded-t-xl pt-3 px-10 flex justify-between" style="width:64%;">
+                    <p class="text-xl font-bold">
+                        {{$total_item_keranjang}} Item
+                    </p>
+                    <p class="text-xl font-bold text-red-600 hover:text-red-800">
+                        Hapus
+                    </p>
+                </div>
+                @foreach($menus_with_jumlah_keranjang as $item)
+                <div style="width:100%" class="mb-3 h-44 bg-white pt-3 px-10 flex justify-between" style="width:64%;">
+                    @if($item['menu']->jenis == "Makanan")
+                    <img style="object-fit: cover; width: 12rem; height:85%;" src="{{ asset('images/makanan/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
+                    @else
+                    <img style="object-fit: cover; width: 12rem; height:85%;" src="{{ asset('images/minuman/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
+
+                    @endif
+
+                    <p class="text-lg font-bold">Nama Menu: {{ $item['menu']->nama }}</p>
+                    <div class="text-xl text-right">
+                        <p>Rp. {{ number_format($item['menu']->harga, 0, ',', '.') }}</p>
+                        <div class="border-1 border-gray-400 w-20 h-8 bg-white mt-20 rounded flex justify-between px-2 font-bold">
+                            <form action="{{ route('hapus-keranjang') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id_menu" value="{{ $item['menu']->id }}">
+                                <button type="submit" class="text-red-600">-</button>
+                            </form>
+                            <p>{{ $item['jumlah_keranjang'] }}</p>
+                            <form action="{{ route('tambah-keranjang') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id_menu" value="{{ $item['menu']->id }}">
+                                <button type="submit" class="text-hijau">+</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                @endforeach
 
             </div>
-            <div class="h-80 bg-white rounded-xl" style="width:33%">
+            <div class="w-3/9">
+                <div class="bg-white rounded-xl p-8" style="width:23rem;height:30rem;">
+                    <p class="text-xl font-bold mb-3">
+                        Ringkasan Pesanan
+                    </p>
+                    <div class="w-full mt-2">
+                        <form action="{{ route('kasir.store') }}" onsubmit="submitForm(event)" method="POST">
+                            @csrf
 
+                            <div class="grid gap-6 mb-6 md:grid-cols-1">
+                                <div>
+                                    <label for="inputBayar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
+                                    <input name="total_bayar" oninput="tampilkanKembalian()" type="text" id="inputBayar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="5.000.000" required />
+                                </div>
+                                <div>
+                                    <label for="meja" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No meja</label>
+                                    <input name="no_meja" type="text" id="meja" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="10" required />
+                                </div>
+                                <input name="nama_kasir" type="text" hidden value="{{ Auth::user()->name }}">
+                                <input name="total_harga" type="text" hidden value="{{ $total_harga }}">
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl ">
+                                        Total
+                                    </p>
+                                    <p class="text-xl font-bold">
+                                        Rp. {{ number_format($total_harga, 0, ',', '.') }},00
+                                    </p>
+                                </div>
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl ">
+                                        Total Bayar
+                                    </p>
+                                    <p class="text-xl " id="outputBayar"></p>
+                                </div>
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl ">
+                                        Kembalian
+                                    </p>
+                                    <p class="text-xl " id="kembalian"></p>
+                                </div>
+                                <button type="submit" class="w-full mx-auto focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Bayar</button>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </div>
-
-
     </div>
 </div>
 <style>
@@ -85,6 +163,54 @@
         document.getElementById('makanan').classList.remove('hidden');
         document.getElementById('menu_makanan').classList.remove('hidden');
     });
+
+    function formatNumber(input) {
+        // Menghapus semua karakter selain angka dari input
+        let value = input.value.replace(/\D/g, '');
+
+        // Memformat angka dengan menambahkan titik sebagai pemisah ribuan
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        // Menetapkan nilai yang sudah diformat kembali ke input
+        input.value = value;
+    }
+
+    function submitForm(event) {
+        // Mengambil nilai input tanpa tanda titik
+        let input = document.getElementById('bayar');
+        let value = input.value.replace(/\D/g, '');
+
+        // Mengubah nilai input menjadi angka
+        input.value = value;
+    }
+
+    // Function untuk menambahkan koma sebagai pemisah ribuan
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function tampilkanKembalian() {
+        var inputBayar = document.getElementById('inputBayar').value;
+        document.getElementById('outputBayar').textContent = "Rp. " + numberWithCommas(inputBayar) + ",00";
+
+        // Ambil nilai input dari inputBayar
+        var inputBayar = document.getElementById('inputBayar').value;
+        // Konversi nilai input menjadi angka
+        var totalBayar = parseFloat(inputBayar.replace(/[^\d.-]/g, ''));
+        // Variabel total_harga 
+        var totalHarga = <?php echo str_replace('.', '', $total_harga); ?>; // Menghilangkan titik dari nilai total_harga
+
+        // Hitung kembalian
+        var kembalian = totalBayar - totalHarga;
+
+        // Tampilkan kembalian di dalam elemen h1 dengan id 'kembalian'
+        document.getElementById('kembalian').innerText = '' + formatRupiah(kembalian);
+    }
+
+    // Fungsi untuk mengubah format angka menjadi format mata uang Rupiah
+    function formatRupiah(angka) {
+        return 'Rp. ' + angka + ',00';
+    }
 </script>
 
 @endsection

@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="w-64">
-                <form class="w-full ml-auto" action="/pendaftaran" method="get">
+                <form class="w-full ml-auto" action="/pesan" method="get">
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Cari</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">

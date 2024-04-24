@@ -24,7 +24,8 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4']], function() {
 
 // untuk admin
 Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
-    Route::get('/admin', [AdminController::class, 'index']);
+    Route::resource('/admin', \App\Http\Controllers\AdminController::class);
+    Route::get('/akun', [AdminController::class, 'akun'])->name('akun');
 });
 
 // untuk kasir
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::post('/tambah-keranjang', [KasirController::class, 'tambah_keranjang'])->name('tambah-keranjang');
     Route::post('/hapus-keranjang', [KasirController::class, 'hapus_keranjang'])->name('hapus-keranjang');
     Route::get('/keranjang', [KasirController::class, 'keranjang'])->name('keranjang');
+    Route::post('/transaksi', [KasirController::class, 'transaksi'])->name('transaksi');
+    Route::get('/riwayat', [KasirController::class, 'riwayat'])->name('riwayat');
 });
 
 // untuk meja
@@ -45,5 +48,5 @@ Route::group(['middleware' => ['auth', 'checkrole:3']], function() {
 // untuk manajer
 Route::group(['middleware' => ['auth', 'checkrole:4']], function() {
     Route::get('/manajer', [ManajerController::class, 'index']);
-
+    Route::get('/menu', [ManajerController::class, 'menu'])->name('menu');
 });

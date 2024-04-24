@@ -30,20 +30,22 @@
                     <p class="mt-3 font-normal text-xl text-black text-center">Berisi menu untuk menambah pesanan baru</p>
                 </div>
             </a>
-
-            <div class="bg-white rounded p-10" style="height: 26rem; width:21rem;">
-                <div class="h-32 mx-auto">
-                    <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="119" height="119" viewBox="0 0 119 119" fill="none">
-                        <path d="M14.875 94.2083C21.6589 90.2917 29.3542 88.2297 37.1875 88.2297C45.0208 88.2297 52.7161 90.2917 59.5 94.2083C66.2839 90.2917 73.9792 88.2297 81.8125 88.2297C89.6458 88.2297 97.3411 90.2917 104.125 94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M14.875 29.75C21.6589 25.8333 29.3542 23.7714 37.1875 23.7714C45.0208 23.7714 52.7161 25.8333 59.5 29.75C66.2839 25.8333 73.9792 23.7714 81.8125 23.7714C89.6458 23.7714 97.3411 25.8333 104.125 29.75" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M14.875 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M59.5 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M104.125 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+            <a href="/riwayat">
+                <div class="bg-white rounded p-10" style="height: 26rem; width:21rem;">
+                    <div class="h-32 mx-auto">
+                        <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="119" height="119" viewBox="0 0 119 119" fill="none">
+                            <path d="M14.875 94.2083C21.6589 90.2917 29.3542 88.2297 37.1875 88.2297C45.0208 88.2297 52.7161 90.2917 59.5 94.2083C66.2839 90.2917 73.9792 88.2297 81.8125 88.2297C89.6458 88.2297 97.3411 90.2917 104.125 94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.875 29.75C21.6589 25.8333 29.3542 23.7714 37.1875 23.7714C45.0208 23.7714 52.7161 25.8333 59.5 29.75C66.2839 25.8333 73.9792 23.7714 81.8125 23.7714C89.6458 23.7714 97.3411 25.8333 104.125 29.75" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.875 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M59.5 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M104.125 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <p class=" font-normal text-4xl text-black text-center">Riwayat Pesanan</p>
+                    <p class="mt-3 font-normal text-xl text-black text-center">Berisi riwayat pesanan yang pernah dilakukan</p>
                 </div>
-                <p class=" font-normal text-4xl text-black text-center">Riwayat Pesanan</p>
-                <p class="mt-3 font-normal text-xl text-black text-center">Berisi riwayat pesanan yang pernah dilakukan</p>
-            </div>
+            </a>
+
             <div class="bg-white rounded p-10" style="height: 26rem; width:21rem;" id="logout">
                 <div class="h-32 mx-auto">
                     <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 110 110" fill="none">
