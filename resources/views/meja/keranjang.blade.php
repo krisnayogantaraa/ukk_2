@@ -74,26 +74,23 @@
 
             </div>
             <div class="w-3/9">
-                <div class="bg-white rounded-xl p-8" style="width:23rem;height:30rem;">
+                <div class="bg-white rounded-xl p-8" style="width:23rem;height:17rem;">
                     <p class="text-xl font-bold mb-3">
                         Ringkasan Pesanan
                     </p>
                     <div class="w-full mt-2">
-                        <form action="{{ route('kasir.store') }}" onsubmit="submitForm(event)" method="POST">
+                        <form action="{{ route('meja.store') }}" onsubmit="submitForm(event)" method="POST">
                             @csrf
 
                             <div class="grid gap-6 mb-6 md:grid-cols-1">
                                 <div>
-                                    <label for="inputBayar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
-                                    <input name="total_bayar" oninput="tampilkanKembalian()" type="text" id="inputBayar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="5.000.000" required />
+                                    <label for="inputBayar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Metode Bayar</label>
+                                    <p>
+                                        Bayar di kasir
+                                    </p>
                                 </div>
-                                <div>
-                                    <label for="meja" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No meja</label>
-                                    <input value="{{$no_meja}}" name="no_meja" type="text" id="meja" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="10" required />
-                                </div>
-                                <input name="nama_kasir" type="text" hidden value="{{ Auth::user()->name }}">
+                                <input name="no_meja" type="text" hidden value="{{ Auth::user()->name }}">
                                 <input name="total_harga" type="text" hidden value="{{ $total_harga }}">
-                                <input name="no_meja" type="text" hidden value="{{ $transaction->no_meja }}">
                                 <div class="w-full flex justify-between">
                                     <p class="text-xl ">
                                         Total
@@ -101,18 +98,6 @@
                                     <p class="text-xl font-bold">
                                         Rp. {{ number_format($total_harga, 0, ',', '.') }},00
                                     </p>
-                                </div>
-                                <div class="w-full flex justify-between">
-                                    <p class="text-xl ">
-                                        Total Bayar
-                                    </p>
-                                    <p class="text-xl " id="outputBayar"></p>
-                                </div>
-                                <div class="w-full flex justify-between">
-                                    <p class="text-xl ">
-                                        Kembalian
-                                    </p>
-                                    <p class="text-xl " id="kembalian"></p>
                                 </div>
                                 <button type="submit" class="w-full mx-auto focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Bayar</button>
                         </form>

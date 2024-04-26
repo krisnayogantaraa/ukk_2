@@ -30,16 +30,16 @@
         </div>
         <div class="w-full bg-white rounded-lg min-h-screen p-5">
             <div class="flex justify-between">
-                    <form class="w-56 ml-auto" action="/riwayat" method="get">
-                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            </div>
-                            <input type="search" name="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari" />
-                            <button type="submit" class="text-white absolute mb-2 end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                <form class="w-56 ml-auto" action="/riwayat" method="get">
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         </div>
-                    </form>
-                </div>
+                        <input type="search" name="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari" />
+                        <button type="submit" class="text-white absolute mb-2 end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+                </form>
+            </div>
 
 
             <div class="relative shadow-md sm:rounded-lg">
@@ -73,6 +73,11 @@
                             <td class="px-6 py-4">{{$transaction->no_meja}}</td>
                             <td class="px-6 py-4">{{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
                             <td class="px-6 py-4">{{ number_format($transaction->total_bayar, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('keranjang_meja', $transaction->no_meja) }}">
+                                    <button type="button" class="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-green-800 w-44">Bayar</button>
+                                </a>
+                            </td>
                         </tr>
                         @empty
                         <div class="alert alert-danger">
