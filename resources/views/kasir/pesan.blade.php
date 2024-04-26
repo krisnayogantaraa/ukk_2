@@ -77,7 +77,7 @@
             @foreach($menus_with_jumlah_keranjang_makanan as $item)
             <div class="bg-white h-80 rounded mb-3" style="width: 96%;">
                 <div class="bg-black mx-auto mt-3 h-40 overflow-hidden" style="max-width: 80%;">
-                    <img style="object-fit: cover; width: 100%; height:100%;" src="{{ asset('images/makanan/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
+                    <img style="object-fit: cover; width: 100%; height:100%;" src="{{ asset('storage/images/makanan/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
                 </div>
                 <div class="ml-5 mt-3">
                     <p class="text-2xl">{{ $item['menu']->nama }}</p>
@@ -118,7 +118,7 @@
             @foreach($menus_with_jumlah_keranjang_minuman as $item)
             <div class="bg-white h-80 rounded mb-3" style="width: 96%;">
                 <div class="bg-black mx-auto mt-3 h-40 overflow-hidden" style="max-width: 80%;">
-                    <img style="object-fit: cover; width: 100%; height:100%;" src="{{ asset('images/minuman/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
+                    <img style="object-fit: cover; width: 100%; height:100%;" src="{{ asset('storage/images/minuman/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
                 </div>
                 <div class="ml-5 mt-3">
                     <p class="text-2xl">{{ $item['menu']->nama }}</p>

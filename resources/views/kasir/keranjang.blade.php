@@ -45,9 +45,9 @@
                 @foreach($menus_with_jumlah_keranjang as $item)
                 <div style="width:100%" class="mb-3 h-44 bg-white pt-3 px-10 flex justify-between" style="width:64%;">
                     @if($item['menu']->jenis == "Makanan")
-                    <img style="object-fit: cover; width: 12rem; height:85%;" src="{{ asset('images/makanan/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
+                    <img style="object-fit: cover; width: 12rem; height:85%;" src="{{ asset('storage/images/makanan/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
                     @else
-                    <img style="object-fit: cover; width: 12rem; height:85%;" src="{{ asset('images/minuman/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
+                    <img style="object-fit: cover; width: 12rem; height:85%;" src="{{ asset('storage/images/minuman/' . $item['menu']->foto) }}" alt="{{ $item['menu']->nama }}">
 
                     @endif
 

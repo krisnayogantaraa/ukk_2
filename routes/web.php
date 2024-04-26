@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::get('/keranjang', [KasirController::class, 'keranjang'])->name('keranjang');
     Route::post('/transaksi', [KasirController::class, 'transaksi'])->name('transaksi');
     Route::get('/riwayat', [KasirController::class, 'riwayat'])->name('riwayat');
+    Route::get('/cetak_invoice', [KasirController::class, 'cetak_invoice'])->name('cetak_invoice');
 });
 
 // untuk meja
@@ -47,6 +48,6 @@ Route::group(['middleware' => ['auth', 'checkrole:3']], function() {
 
 // untuk manajer
 Route::group(['middleware' => ['auth', 'checkrole:4']], function() {
-    Route::get('/manajer', [ManajerController::class, 'index']);
+    Route::resource('/manajer', \App\Http\Controllers\ManajerController::class);
     Route::get('/menu', [ManajerController::class, 'menu'])->name('menu');
 });

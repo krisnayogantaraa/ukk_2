@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_kasir');
             $table->string('no_meja');
-            $table->string('total_harga');
-            $table->string('total_bayar');
+            $table->integer('total_harga');
+            $table->integer('total_bayar');
             $table->timestamps();
         });
     }

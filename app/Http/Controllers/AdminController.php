@@ -40,6 +40,7 @@ class AdminController extends Controller
     {
         return view('admin.create');
     }
+    
     public function store(Request $request): RedirectResponse
     {
         //validate form
@@ -62,18 +63,6 @@ class AdminController extends Controller
 
         //redirect to index
         return redirect()->route('admin.index')->with(['success' => 'Data Berhasil Disimpan!']);
-    }
-
-    public function destroy($id): RedirectResponse
-    {
-        //get User by ID
-        $User = User::findOrFail($id);
-
-        //delete User
-        $User->delete();
-
-        //redirect to index
-        return redirect()->route('admin.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 
     public function edit(string $id): View

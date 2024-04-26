@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use pdf;
 
 class KasirController extends Controller
 {
@@ -190,11 +191,9 @@ class KasirController extends Controller
 
         ]);
 
-        carts::where('id_akun', $id_akun)->delete();
-
 
         //redirect to index
-        return redirect()->route('kasir.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('cetak_invoice');
     }
 
     public function riwayat(Request $request): View
@@ -212,5 +211,59 @@ class KasirController extends Controller
 
 
         return view('kasir.riwayat', compact('transactions'));
+    }
+
+    public function cetak_invoice()
+    {
+        $id_akun = Auth::id();
+        $name = Auth::user()->name;
+
+        $carts_menu_ids = carts::where('id_akun', $id_akun)
+            ->pluck('id_menu') // Mengambil ID menu dari carts
+            ->toArray();
+
+        $menus = menu::whereIn('id', $carts_menu_ids) // Hanya menu dengan ID yang ada di carts
+            ->latest()
+            ->get();
+
+        $id_akun = Auth::id(); // Variabel yang sudah Anda miliki
+        $total_harga = 0;
+
+        $jumlah_per_item = carts::selectRaw('id_menu, count(*) as jumlah')
+            ->where('id_akun', $id_akun)
+            ->groupBy('id_menu')
+            ->get();
+
+        foreach ($jumlah_per_item as $item) {
+            // Ambil harga menu dari tabel menus berdasarkan id_menu
+            $menu = menu::find($item->id_menu);
+            $total_harga += $menu->harga * $item->jumlah;
+        }
+
+        $menus_with_jumlah_keranjang = [];
+
+        foreach ($menus as $menu) {
+            $jumlah_keranjang = carts::where('id_akun', $id_akun)
+                ->where('id_menu', $menu->id)
+                ->count();
+
+            $menus_with_jumlah_keranjang[] = [
+                'menu' => $menu,
+                'jumlah_keranjang' => $jumlah_keranjang,
+            ];
+        }
+
+        $total_item_keranjang = carts::where('id_akun', $id_akun)
+            ->count();
+
+        $transaction = transactions::where('nama_kasir', $name)->first();
+
+
+        return view('kasir.invoice', [
+            'menus_with_jumlah_keranjang' => $menus_with_jumlah_keranjang,
+        ], compact('total_item_keranjang', 'total_harga', 'transaction'));
+
+        $hapus_keranjang = carts::where('id_akun', $id_akun)->delete();
+        $hapus_keranjang->delete();
     }
 }

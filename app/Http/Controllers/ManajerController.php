@@ -37,4 +37,110 @@ class ManajerController extends Controller
         //render view with menus
         return view('manajer.menu', compact('menus'));
     }
+
+    public function destroy($id): RedirectResponse
+    {
+        //get menu by ID
+        $menu = menu::findOrFail($id);
+
+        if ($menu->jenis == "Makanan") {
+            Storage::disk('local')->delete('public/images/makanan/' . $menu->foto);
+        } else {
+            Storage::disk('local')->delete('public/images/minuman/' . $menu->foto);
+        }
+
+
+        //delete menu
+        $menu->delete();
+
+        //redirect to index
+        return redirect()->route('menu')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
+
+    public function create(): View
+    {
+        return view('manajer.create');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        //validate form
+        $this->validate($request, [
+            'nama'     => 'required|min:5',
+            'jenis'     => 'required|min:1',
+            'harga'     => 'required|min:1',
+            'foto'     => 'required|mimes:pdf,xlxs,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg|max:2048',
+        ]);
+
+        if ($request->jenis == "Makanan") {
+            $foto = $request->file('foto');
+            $foto->storeAs('public/images/makanan', $foto->hashName());
+        } else {
+            $foto = $request->file('foto');
+            $foto->storeAs('public/images/minuman', $foto->hashName());
+        }
+
+
+        menu::create([
+            'foto'     => $foto->hashName(),
+            'nama'      => $request->nama,
+            'harga'      => $request->harga,
+            'jenis'    => $request->jenis,
+        ]);
+
+        //redirect to index
+        return redirect()->route('menu')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    public function edit(string $id): View
+    {
+        //get menu by ID
+        $menu = menu::findOrFail($id);
+
+        //render view with menu
+        return view('manajer.edit', compact('menu'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi data yang diterima dari form
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga' => 'required|numeric',
+            'jenis' => 'required|string|in:Makanan,Minuman', // Validasi jenis menu
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Batasi jenis dan ukuran gambar
+        ]);
+
+        // Cari data menu yang akan diupdate berdasarkan ID
+        $menu = Menu::findOrFail($id);
+
+        // Update data menu dengan nilai baru dari form
+        $menu->nama = $validatedData['nama'];
+        $menu->harga = $validatedData['harga'];
+        $menu->jenis = $validatedData['jenis'];
+
+        // Tentukan path penyimpanan gambar berdasarkan jenis menu
+        $pathPrefix = ($validatedData['jenis'] == 'Makanan') ? 'makanan' : 'minuman';
+
+        // Proses gambar jika ada perubahan gambar baru yang diupload
+        if ($request->hasFile('foto')) {
+            // Hapus gambar lama jika ada
+            if ($menu->foto) {
+                Storage::delete('public/images/' . $pathPrefix . '/' . $menu->foto);
+            }
+
+            // Simpan gambar baru ke direktori storage
+            $foto = $request->file('foto');
+            $path = $foto->storeAs('public/images/' . $pathPrefix, $foto->hashName());
+
+            // Simpan nama file gambar baru ke database
+            $menu->foto = basename($path);
+        }
+
+        // Simpan perubahan ke database
+        $menu->save();
+
+        // Redirect atau tampilkan pesan berhasil
+        return redirect()->route('menu')->with('success', 'Data menu berhasil diperbarui.');
+    }
 }

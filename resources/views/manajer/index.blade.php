@@ -30,7 +30,7 @@
                     <p class="mt-3 font-normal text-xl text-black text-center">Berisi Data Menu</p>
                 </div>
             </a>
-            <a href="/riwayat">
+            <a href="/manajer">
                 <div class="bg-white rounded p-10" style="height: 26rem; width:21rem;">
                     <div class="h-32 mx-auto">
                         <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="119" height="119" viewBox="0 0 119 119" fill="none">
