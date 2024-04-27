@@ -192,7 +192,7 @@ class KasirController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('cetak_invoice')->with('no_meja',$request->no_meja);
+        return redirect()->route('cetak_invoice')->with('no_meja', $request->no_meja);
     }
 
     public function riwayat(Request $request): View
@@ -215,9 +215,13 @@ class KasirController extends Controller
     public function cetak_invoice(Request $request)
     {
         $no_meja = session('no_meja');
+        $id_transaksi = session('id_transaksi');
 
-        $id_akun = user::where('name', $no_meja)->value('id');
-
+        if (!empty($id_transaksi)) {
+            $id_akun = $id_transaksi;
+        } else {
+            $id_akun = auth()->id();
+        }
         $name = Auth::user()->name;
 
         $carts_menu_ids = carts::where('id_akun', $id_akun)
@@ -258,16 +262,14 @@ class KasirController extends Controller
 
         $transaction = transactions::where('nama_kasir', $name)->first();
 
+        carts::where('id_akun', $id_akun)->delete();
 
         return view('kasir.invoice', [
             'menus_with_jumlah_keranjang' => $menus_with_jumlah_keranjang,
-        ], compact('total_item_keranjang', 'total_harga', 'transaction'));
-
-        $hapus_keranjang = carts::where('id_akun', $id_akun)->delete();
-        $hapus_keranjang->delete();
+        ], compact('total_item_keranjang', 'total_harga', 'transaction', 'no_meja'));
     }
 
-    public function keranjang_meja($no_meja)
+    public function keranjang_meja($no_meja, $id_transaksi)
     {
         $user = user::where('name', $no_meja)->first();
         $transaction = transactions::where('no_meja', $no_meja)->first();
@@ -309,8 +311,37 @@ class KasirController extends Controller
         $total_item_keranjang = carts::where('id_akun', $user->id)
             ->count();
 
-        return view('kasir.keranjang', [
+        return view('kasir.keranjang_meja', [
             'menus_with_jumlah_keranjang' => $menus_with_jumlah_keranjang,
-        ], compact('total_item_keranjang', 'total_harga', 'no_meja','transaction'));
+        ], compact('total_item_keranjang', 'total_harga', 'no_meja', 'transaction', 'id_transaksi'));
+    }
+
+    public function meja_bayar(Request $request, $id_transaksi): RedirectResponse
+    {
+
+        //validate form
+        $this->validate($request, [
+            'nama_kasir' => 'required',
+            'no_meja' => 'required',
+            'total_harga' => 'required',
+            'total_bayar' => 'required',
+
+        ]);
+
+        //create
+        transactions::updateOrCreate(
+            ['id' => $id_transaksi], // Kondisi pencarian
+            [   // Data yang akan di-update atau dibuat
+                'nama_kasir' => $request->nama_kasir,
+                'no_meja' => $request->no_meja,
+                'total_harga' => $request->total_harga,
+                'total_bayar' => $request->total_bayar,
+            ]
+        );
+
+        //redirect to index
+        return redirect()->route('cetak_invoice')
+            ->with('no_meja', $request->no_meja)
+            ->with('id_transaksi', $id_transaksi);
     }
 }

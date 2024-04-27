@@ -13,7 +13,7 @@
                 <p class="text-white align-middle mt-3 text-2xl">Pesanan Baru</p>
             </div>
             <div class="flex h-14 gap-4">
-                <p class="text-white align-middle mt-3 text-lg">Diana Hayandadi</p>
+                <p class="text-white align-middle mt-3 text-lg">{{auth()->user()->name}}</p>
                 <div class="h-14 w-14 bg-white rounded-full">
 
                 </div>
@@ -103,7 +103,7 @@
                 </div>
                 @else
                 <div class="mx-auto text-center">
-                    <form action="{{ route('tambah-keranjang') }}" method="POST">
+                    <form action="{{ route('tambah-keranjang-kasir') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id_menu" value="{{ $item['menu']->id }}">
                         <button type="submit" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah</button>

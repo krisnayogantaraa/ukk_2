@@ -13,7 +13,7 @@
                 <p class="text-white align-middle mt-3 text-2xl">Pesanan Baru</p>
             </div>
             <div class="flex h-14 gap-4">
-                <p class="text-white align-middle mt-3 text-lg">Diana Hayandadi</p>
+                <p class="text-white align-middle mt-3 text-lg">{{auth()->user()->name}}</p>
                 <div class="h-14 w-14 bg-white rounded-full">
 
                 </div>
@@ -128,7 +128,7 @@
                 </div>
                 @if($item['jumlah_keranjang'] >= 1)
                 <div class="mx-auto text-center flex gap-3 w-1/2">
-                    <form action="{{ route('hapus-keranjang') }}" method="POST">
+                    <form action="{{ route('hapus-keranjang-meja') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id_menu" value="{{ $item['menu']->id }}">
                         <button type="submit" class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-xl w-9 h-9 px-1 py-1 me-2 mb-2 ">-</button>
@@ -136,7 +136,7 @@
                     <p class="text-xl mt-1">
                         {{ $item['jumlah_keranjang'] }}
                     </p>
-                    <form action="{{ route('tambah-keranjang') }}" method="POST">
+                    <form action="{{ route('tambah-keranjang-meja') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id_menu" value="{{ $item['menu']->id }}">
                         <button type="submit" class="ml-2 focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-full text-xl w-9 h-9 px-1 py-1 me-2 mb-2 ">+</button>
@@ -144,7 +144,7 @@
                 </div>
                 @else
                 <div class="mx-auto text-center">
-                    <form action="{{ route('tambah-keranjang') }}" method="POST">
+                    <form action="{{ route('tambah-keranjang-meja') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id_menu" value="{{ $item['menu']->id }}">
                         <button type="submit" class="focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah</button>
@@ -157,7 +157,7 @@
     </div>
 </div>
 
-<a href="/keranjang" id="floating-btn" class="flex justify-center items-center bg-coklat">
+<a href="/keranjang-meja" id="floating-btn" class="flex justify-center items-center bg-coklat">
     <svg class="h-16 w-16 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
         <path fill="currentColor" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
     </svg>

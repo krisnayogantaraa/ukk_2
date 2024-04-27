@@ -22,7 +22,7 @@
     </nav>
     <div class="p-16 px-24 pb-3">
         <div class="w-24 pt-3 ml-3 mb-2">
-            <a href="/pesan" class="flex gap-2">
+            <a href="/riwayat" class="flex gap-2">
                 <svg style="margin-top: 3px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 270 223" fill="none">
                     <path d="M79.6313 143.023L16.2396 79.6313M16.2396 79.6313L79.6313 16.2396M16.2396 79.6313H190.567C207.379 79.6313 223.503 86.3101 235.392 98.1983C247.28 110.087 253.959 126.211 253.959 143.023C253.959 159.836 247.28 175.959 235.392 187.848C223.503 199.736 207.379 206.415 190.567 206.415H174.719" stroke="black" stroke-width="31.6959" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
@@ -74,23 +74,26 @@
 
             </div>
             <div class="w-3/9">
-                <div class="bg-white rounded-xl p-8" style="width:23rem;height:17rem;">
+                <div class="bg-white rounded-xl p-8" style="width:23rem;height:30rem;">
                     <p class="text-xl font-bold mb-3">
                         Ringkasan Pesanan
                     </p>
                     <div class="w-full mt-2">
-                        <form action="{{ route('meja.store') }}" onsubmit="submitForm(event)" method="POST">
+                        <form action="{{ route('meja_bayar', $id_transaksi) }}" onsubmit="submitForm(event)" method="POST">
                             @csrf
 
                             <div class="grid gap-6 mb-6 md:grid-cols-1">
                                 <div>
-                                    <label for="inputBayar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Metode Bayar</label>
-                                    <p>
-                                        Bayar di kasir
-                                    </p>
+                                    <label for="inputBayar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Bayar</label>
+                                    <input name="total_bayar" oninput="tampilkanKembalian()" type="text" id="inputBayar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="5.000.000" required />
                                 </div>
-                                <input name="no_meja" type="text" hidden value="{{ Auth::user()->name }}">
+                                <div>
+                                    <label for="meja" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No meja</label>
+                                    <input value="{{$no_meja}}" name="no_meja" type="text" id="meja" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="10" required />
+                                </div>
+                                <input name="nama_kasir" type="text" hidden value="{{ Auth::user()->name }}">
                                 <input name="total_harga" type="text" hidden value="{{ $total_harga }}">
+                                <input name="no_meja" type="text" hidden value="{{ $transaction->no_meja }}">
                                 <div class="w-full flex justify-between">
                                     <p class="text-xl ">
                                         Total
@@ -99,7 +102,19 @@
                                         Rp. {{ number_format($total_harga, 0, ',', '.') }},00
                                     </p>
                                 </div>
-                                <button type="submit" class="w-full mx-auto focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Pesan</button>
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl ">
+                                        Total Bayar
+                                    </p>
+                                    <p class="text-xl " id="outputBayar"></p>
+                                </div>
+                                <div class="w-full flex justify-between">
+                                    <p class="text-xl ">
+                                        Kembalian
+                                    </p>
+                                    <p class="text-xl " id="kembalian"></p>
+                                </div>
+                                <button type="submit" class="w-full mx-auto focus:outline-none text-white bg-hijau_muda hover:bg-lime-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Bayar</button>
                         </form>
                     </div>
 
