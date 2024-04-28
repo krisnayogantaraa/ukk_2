@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\carts;
+use App\Models\logs;
 use App\Models\menu;
 use App\Models\transactions;
 use Illuminate\View\View;
@@ -113,6 +114,13 @@ class MejaController extends Controller
             'id_menu' => $request->id_menu,
         ]);
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menambahkan menu ke keranjang dengan id $request->id_menu",
+        ]);
+
         return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
@@ -127,6 +135,13 @@ class MejaController extends Controller
         } else {
             return redirect()->back()->with(['error' => 'Keranjang tidak ditemukan']);
         }
+        
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menghapus menu dari keranjang dengan id $request->id_menu",
+        ]);
     }
 
     public function keranjang()
@@ -192,6 +207,12 @@ class MejaController extends Controller
             'total_harga' => $request->total_harga,
         ]);
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menambahkan pesanan baru",
+        ]);
 
         //redirect to index
         return redirect()->route('cetak_invoice');
@@ -204,6 +225,13 @@ class MejaController extends Controller
         transactions::where('no_meja', $user->name)
         ->where('total_bayar', null)
         ->delete();
+
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Membatalkan pesanan",
+        ]);
 
         //redirect to index
         return redirect()->route('meja.index');

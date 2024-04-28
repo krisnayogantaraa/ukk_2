@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4']], function() {
 Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/akun', [AdminController::class, 'akun'])->name('akun');
+    Route::get('/logs-admin', [AdminController::class, 'logs'])->name('logs-admin');
 });
 
 // untuk kasir
@@ -57,4 +58,5 @@ Route::group(['middleware' => ['auth', 'checkrole:3']], function() {
 Route::group(['middleware' => ['auth', 'checkrole:4']], function() {
     Route::resource('/manajer', \App\Http\Controllers\ManajerController::class);
     Route::get('/menu', [ManajerController::class, 'menu'])->name('menu');
+    Route::get('/logs', [ManajerController::class, 'logs'])->name('logs');
 });

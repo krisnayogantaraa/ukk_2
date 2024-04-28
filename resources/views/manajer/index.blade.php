@@ -30,19 +30,15 @@
                     <p class="mt-3 font-normal text-xl text-black text-center">Berisi Data Menu</p>
                 </div>
             </a>
-            <a href="/manajer">
+            <a href="/logs">
                 <div class="bg-white rounded p-10" style="height: 26rem; width:21rem;">
                     <div class="h-32 mx-auto">
-                        <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="119" height="119" viewBox="0 0 119 119" fill="none">
-                            <path d="M14.875 94.2083C21.6589 90.2917 29.3542 88.2297 37.1875 88.2297C45.0208 88.2297 52.7161 90.2917 59.5 94.2083C66.2839 90.2917 73.9792 88.2297 81.8125 88.2297C89.6458 88.2297 97.3411 90.2917 104.125 94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M14.875 29.75C21.6589 25.8333 29.3542 23.7714 37.1875 23.7714C45.0208 23.7714 52.7161 25.8333 59.5 29.75C66.2839 25.8333 73.9792 23.7714 81.8125 23.7714C89.6458 23.7714 97.3411 25.8333 104.125 29.75" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M14.875 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M59.5 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M104.125 29.75V94.2083" stroke="black" stroke-width="6.34757" stroke-linecap="round" stroke-linejoin="round" />
+                        <svg class="mx-auto" width="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z" />
                         </svg>
                     </div>
-                    <p class=" font-normal text-4xl text-black text-center">Riwayat Pesanan</p>
-                    <p class="mt-3 font-normal text-xl text-black text-center">Berisi riwayat pesanan yang pernah dilakukan</p>
+                    <p class=" font-normal text-4xl text-black text-center">Logs</p>
+                    <p class="mt-3 font-normal text-xl text-black text-center">Berisi riwayat aktivitas akun</p>
                 </div>
             </a>
 

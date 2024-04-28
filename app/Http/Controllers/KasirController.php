@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\carts;
 use App\Models\menu;
 use App\Models\user;
+use App\Models\logs;
 use App\Models\transactions;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -107,6 +108,12 @@ class KasirController extends Controller
             'id_menu' => $request->id_menu,
         ]);
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menambakan menu ke keranjang",
+        ]);
         return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
@@ -115,6 +122,14 @@ class KasirController extends Controller
 
         $id_menu = $request->id_menu;
         $cart = carts::where('id_menu', $id_menu)->first();
+
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menghapus menu dari keranjang",
+        ]);
+
         if ($cart) {
             $cart->delete();
             return redirect()->back()->with(['success' => 'Keranjang berhasil dihapus']);
@@ -191,6 +206,13 @@ class KasirController extends Controller
 
         ]);
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Memesan pesanan baru untuk meja no $request->no_meja",
+        ]);
+
         //redirect to index
         return redirect()->route('cetak_invoice')->with('no_meja', $request->no_meja);
     }
@@ -263,6 +285,13 @@ class KasirController extends Controller
         $transaction = transactions::where('nama_kasir', $name)->first();
 
         carts::where('id_akun', $id_akun)->delete();
+
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Cetak Invoice untuk transaksi meja no $transaction->no_meja",
+        ]);
 
         return view('kasir.invoice', [
             'menus_with_jumlah_keranjang' => $menus_with_jumlah_keranjang,
@@ -338,6 +367,13 @@ class KasirController extends Controller
                 'total_bayar' => $request->total_bayar,
             ]
         );
+
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Melakukan pembayaran untuk meja no $request->no_meja",
+        ]);
 
         //redirect to index
         return redirect()->route('cetak_invoice')

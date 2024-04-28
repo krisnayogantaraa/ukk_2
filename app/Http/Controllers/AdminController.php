@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\logs;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Registersusers;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -51,14 +53,19 @@ class AdminController extends Controller
             'role_id'     => 'required|min:1|max:255',
         ]);
 
-
-
         //create User
         User::create([
             'name'      => $request->name,
             'role_id'      => $request->role_id,
             'email'      => $request->email,
             'password'      => bcrypt($request->password),
+        ]);
+
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Membuat Akun Baru Bernama $request->name",
         ]);
 
         //redirect to index
@@ -107,6 +114,28 @@ class AdminController extends Controller
         // Simpan perubahan atau buat pengguna baru
         $user->save();
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Membuat Mengubah Akun dengan nama $request->name",
+        ]);
+
         return redirect()->route('admin.index')->with('success', 'Data saved successfully');
+    }
+
+    public function logs(Request $request): View
+    {
+
+        if ($request->has('search')) {
+            $logs = logs::where('nama_akun', 'LIKE', "%$request->search%")
+                ->orWhere('aktivitas', 'LIKE', "%$request->search%")
+                ->paginate(10);
+        } else {
+            $logs = logs::latest()->paginate(10);
+        }
+
+        //render view with logs
+        return view('admin.logs', compact('logs'));
     }
 }

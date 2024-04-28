@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\menu;
+use App\Models\logs;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\Registersusers;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ManajerController extends Controller
@@ -22,7 +24,6 @@ class ManajerController extends Controller
 
     public function menu(Request $request): View
     {
-
 
         if ($request->has('search')) {
             $menus = menu::where('nama', 'LIKE', "%$request->search%")
@@ -49,6 +50,12 @@ class ManajerController extends Controller
             Storage::disk('local')->delete('public/images/minuman/' . $menu->foto);
         }
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menghapus menu dengan nama $menu->nama",
+        ]);
 
         //delete menu
         $menu->delete();
@@ -86,6 +93,13 @@ class ManajerController extends Controller
             'nama'      => $request->nama,
             'harga'      => $request->harga,
             'jenis'    => $request->jenis,
+        ]);
+
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Menambah menu dengan nama $request->nama",
         ]);
 
         //redirect to index
@@ -140,7 +154,30 @@ class ManajerController extends Controller
         // Simpan perubahan ke database
         $menu->save();
 
+        $name = Auth::user()->name;
+
+        logs::create([
+            'nama_akun' => $name,
+            'aktivitas' => "Mengubah data menu dengan nama $request->nama",
+        ]);
+
         // Redirect atau tampilkan pesan berhasil
         return redirect()->route('menu')->with('success', 'Data menu berhasil diperbarui.');
+    }
+
+    public function logs(Request $request): View
+    {
+
+        if ($request->has('search')) {
+            $logs = logs::where('nama_akun', 'LIKE', "%$request->search%")
+                ->orWhere('aktivitas', 'LIKE', "%$request->search%")
+                ->latest()
+                ->paginate(10);
+        } else {
+            $logs = logs::latest()->paginate(10);
+        }
+
+        //render view with logs
+        return view('manajer.logs', compact('logs'));
     }
 }
