@@ -89,11 +89,10 @@
                                 </div>
                                 <div>
                                     <label for="meja" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No meja</label>
-                                    <input value="{{$no_meja}}" name="no_meja" type="text" id="meja" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="10" required />
+                                    <input name="no_meja" type="text" id="meja" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="10" required />
                                 </div>
                                 <input name="nama_kasir" type="text" hidden value="{{ Auth::user()->name }}">
                                 <input name="total_harga" type="text" hidden value="{{ $total_harga }}">
-                                <input name="no_meja" type="text" hidden value="{{ $transaction->no_meja }}">
                                 <div class="w-full flex justify-between">
                                     <p class="text-xl ">
                                         Total

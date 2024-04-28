@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
 @section('contents')
-<div class="d-flex justify-content-center align-items-center vh-100"
+<div class="h-screen flex items-center"
   style="background-image: url('{{ asset('images/bg/background_login.png') }}'); background-size: cover;background-position: center;background-repeat: no-repeat;">
-  <div class="bg-coklat rounded-3xl p-6" style="width: 21rem; height: 28rem;">
+  <div class="bg-coklat rounded-3xl p-6 mx-auto" style="width: 21rem; height: 28rem;">
     <div class="w-full flex justify-center">
       <div class="w-36 h-36">
         <img src="{{ asset('images/logo/logo.png') }}" alt="Logo Cafe">

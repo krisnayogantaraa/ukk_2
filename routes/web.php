@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::get('/keranjang_meja/{no_meja}/{id_transaksi}', [KasirController::class, 'keranjang_meja'])->name('keranjang_meja');
     Route::post('/transaksi', [KasirController::class, 'transaksi'])->name('transaksi');
     Route::get('/riwayat', [KasirController::class, 'riwayat'])->name('riwayat');
-    Route::get('/meja_bayar{id_transaksi}', [KasirController::class, 'meja_bayar'])->name('meja_bayar');
+    Route::post('/meja_bayar{id_transaksi}', [KasirController::class, 'meja_bayar'])->name('meja_bayar');
     Route::get('/cetak_invoice', [KasirController::class, 'cetak_invoice'])->name('cetak_invoice');
 });
 
@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth', 'checkrole:3']], function() {
     Route::post('/tambah-keranjang-meja', [MejaController::class, 'tambah_keranjang'])->name('tambah-keranjang-meja');
     Route::post('/hapus-keranjang-meja', [MejaController::class, 'hapus_keranjang'])->name('hapus-keranjang-meja');
     Route::get('/keranjang-meja', [MejaController::class, 'keranjang'])->name('keranjang-meja');
+    Route::get('/batalkan_pesanan', [MejaController::class, 'batalkan_pesanan'])->name('batalkan_pesanan');
 
 });
 

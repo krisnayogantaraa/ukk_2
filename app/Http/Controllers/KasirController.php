@@ -218,7 +218,7 @@ class KasirController extends Controller
         $id_transaksi = session('id_transaksi');
 
         if (!empty($id_transaksi)) {
-            $id_akun = $id_transaksi;
+            $id_akun = user::where('name', $no_meja)->value('id');
         } else {
             $id_akun = auth()->id();
         }
@@ -266,7 +266,7 @@ class KasirController extends Controller
 
         return view('kasir.invoice', [
             'menus_with_jumlah_keranjang' => $menus_with_jumlah_keranjang,
-        ], compact('total_item_keranjang', 'total_harga', 'transaction', 'no_meja'));
+        ], compact('total_item_keranjang', 'total_harga', 'transaction', 'no_meja', 'id_transaksi'));
     }
 
     public function keranjang_meja($no_meja, $id_transaksi)
@@ -313,7 +313,7 @@ class KasirController extends Controller
 
         return view('kasir.keranjang_meja', [
             'menus_with_jumlah_keranjang' => $menus_with_jumlah_keranjang,
-        ], compact('total_item_keranjang', 'total_harga', 'no_meja', 'transaction', 'id_transaksi'));
+        ], compact('total_item_keranjang', 'total_harga', 'no_meja', 'transaction','id_transaksi'));
     }
 
     public function meja_bayar(Request $request, $id_transaksi): RedirectResponse

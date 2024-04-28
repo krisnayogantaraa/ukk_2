@@ -16,7 +16,25 @@ class MejaController extends Controller
 {
     public function index()
     {
-        return view('meja.index');
+
+        $user = Auth::user();
+        $name = $user->name;
+
+        $transaction = transactions::where(function ($query) use ($name) {
+            $query->whereNull('nama_kasir')
+                ->orWhere('nama_kasir', '')
+                ->whereNull('total_bayar')
+                ->orWhere('total_bayar', 0)
+                ->where('no_meja', $name);
+        })->first();
+
+        if ($transaction) {
+            $total_bayar = 1;
+        } else {
+            $total_bayar = 0;
+        }
+
+        return view('meja.index', compact('total_bayar'));
     }
 
     public function meja_pesan(Request $request): View
@@ -177,5 +195,17 @@ class MejaController extends Controller
 
         //redirect to index
         return redirect()->route('cetak_invoice');
+    }
+
+    public function batalkan_pesanan(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+        carts::where('id_akun', $user->id)->delete();
+        transactions::where('no_meja', $user->name)
+        ->where('total_bayar', null)
+        ->delete();
+
+        //redirect to index
+        return redirect()->route('meja.index');
     }
 }
